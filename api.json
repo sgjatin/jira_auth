@@ -1,0 +1,142 @@
+{
+  "client": "Thunder Client",
+  "collectionName": "Jira Auth APIs",
+  "dateExported": "2023-01-27T11:30:04.167Z",
+  "version": "1.1",
+  "folders": [],
+  "requests": [
+    {
+      "_id": "002d86f6-fa3c-4e03-aadc-0408d45f9660",
+      "colId": "219538cc-93b6-45f7-89a6-804a4285a1a3",
+      "containerId": "",
+      "name": "Get Access token exchanging code",
+      "url": "https://auth.atlassian.com/oauth/token",
+      "method": "POST",
+      "sortNum": 10000,
+      "created": "2023-01-18T11:24:13.848Z",
+      "modified": "2023-01-18T11:24:13.848Z",
+      "headers": [],
+      "params": [],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"grant_type\": \"authorization_code\",\n  \"client_id\": \"Byws3TO2dp8l7S1SSnyar1GEUHW9wUBz\",\n  \"client_secret\": \"ATOAtN35HXuWd8hblsXyKgsRRQ26vfrJ5NI-ttW5By_ZASRVZlAFKN1gz0NuOUoD-6IK43990AEB\",\n  \"code\": \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI1ZDM5ZWE5NjhhOThiMjBjMmJlYWRlZjMiLCJuYmYiOjE2NzQwNDA3MDMsImlzcyI6ImF1dGguYXRsYXNzaWFuLmNvbSIsImlhdCI6MTY3NDA0MDcwMywiZXhwIjoxNjc0MDQxMDAzLCJhdWQiOiJCeXdzM1RPMmRwOGw3UzFTU255YXIxR0VVSFc5d1VCeiIsImp0aSI6IjEwOTE1NWQ5LTA4ODktNDBkNC04N2QxLTlmOTFlZjM5ZjM5MCIsImNsaWVudF9hdXRoX3R5cGUiOiJQT1NUIiwiaHR0cHM6Ly9pZC5hdGxhc3NpYW4uY29tL3Nlc3Npb25faWQiOiI0M2VhMGVlMi04NTA2LTRiZGYtYTljYi0wMGQ1YTdlMGFiZDQiLCJodHRwczovL2lkLmF0bGFzc2lhbi5jb20vdmVyaWZpZWQiOnRydWUsImh0dHBzOi8vaWQuYXRsYXNzaWFuLmNvbS91anQiOiIxMDkxNTVkOS0wODg5LTQwZDQtODdkMS05ZjkxZWYzOWYzOTAiLCJzY29wZSI6WyJyZWFkOmppcmEtd29yayIsInJlYWQ6amlyYS11c2VyIl0sImh0dHBzOi8vaWQuYXRsYXNzaWFuLmNvbS9hdGxfdG9rZW5fdHlwZSI6IkFVVEhfQ09ERSJ9.vs0lhyVDzB_kvTsG9tjPAjhGXnHcepdPDEjPWlJKrzM\",\n  \"redirect_uri\": \"https://56d7-14-140-115-103.in.ngrok.io/callback\"\n  \n}",
+        "form": []
+      },
+      "tests": []
+    },
+    {
+      "_id": "58032491-e154-4a5f-969b-31743e179dea",
+      "colId": "219538cc-93b6-45f7-89a6-804a4285a1a3",
+      "containerId": "",
+      "name": "Get new access token",
+      "url": "localhost:3333/jira/refresh_token",
+      "method": "GET",
+      "sortNum": 20000,
+      "created": "2023-01-24T09:33:36.179Z",
+      "modified": "2023-01-24T09:39:03.858Z",
+      "headers": [],
+      "params": [],
+      "tests": [
+        {
+          "type": "set-env-var",
+          "custom": "json.access_token",
+          "action": "setto",
+          "value": "{{access_token}}"
+        },
+        {
+          "type": "set-env-var",
+          "custom": "json.refresh_token",
+          "action": "setto",
+          "value": "{{refresh_token}}"
+        }
+      ]
+    },
+    {
+      "_id": "c575af1d-6820-4240-86e7-639646b4d934",
+      "colId": "219538cc-93b6-45f7-89a6-804a4285a1a3",
+      "containerId": "",
+      "name": "Get All projects",
+      "url": "{{base_url}}/rest/api/3/project/search",
+      "method": "GET",
+      "sortNum": 30000,
+      "created": "2023-01-24T09:44:57.218Z",
+      "modified": "2023-01-27T05:05:12.213Z",
+      "headers": [],
+      "params": [],
+      "auth": { "type": "bearer", "bearer": "{{access_token}}" },
+      "tests": []
+    },
+    {
+      "_id": "651b9a34-d767-4883-ad37-e5f4d0673b23",
+      "colId": "219538cc-93b6-45f7-89a6-804a4285a1a3",
+      "containerId": "",
+      "name": "Search issues of Project",
+      "url": "{{base_url}}/rest/api/3/search?jql=project%20%3D%20HP",
+      "method": "GET",
+      "sortNum": 40000,
+      "created": "2023-01-24T10:05:35.240Z",
+      "modified": "2023-01-24T10:06:32.735Z",
+      "headers": [],
+      "params": [
+        { "name": "jql", "value": "project%20%3D%20HP", "isPath": false }
+      ],
+      "auth": { "type": "bearer", "bearer": "{{access_token}}" },
+      "tests": []
+    },
+    {
+      "_id": "305b3441-cf6a-4a14-984a-eb7b7dc71b4b",
+      "colId": "219538cc-93b6-45f7-89a6-804a4285a1a3",
+      "containerId": "",
+      "name": "Add webhook",
+      "url": "{{base_url}}/rest/api/3/webhook",
+      "method": "POST",
+      "sortNum": 50000,
+      "created": "2023-01-24T10:21:05.859Z",
+      "modified": "2023-01-27T07:17:39.564Z",
+      "headers": [],
+      "params": [],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"webhooks\": [\n    {\n      \"jqlFilter\": \"project = 'HP'\",\n      \"events\": [\n        \"jira:issue_created\",\n        \"jira:issue_updated\",\n        \"jira:issue_deleted\",\n        \"comment_created\",\n        \"comment_updated\",\n        \"comment_deleted\",\n        \"issue_property_set\",\n        \"issue_property_deleted\"\n      ]\n    }\n  ],\n  \"url\": \"https://49b1-14-140-115-103.in.ngrok.io/webhook\"\n}",
+        "form": []
+      },
+      "auth": { "type": "bearer", "bearer": "{{access_token}}" },
+      "tests": []
+    },
+    {
+      "_id": "4150b4bb-9b9e-4599-9724-7f95706389e5",
+      "colId": "219538cc-93b6-45f7-89a6-804a4285a1a3",
+      "containerId": "",
+      "name": "Get All Webhooks",
+      "url": "{{base_url}}/rest/api/3/webhook",
+      "method": "GET",
+      "sortNum": 55000,
+      "created": "2023-01-27T05:00:41.023Z",
+      "modified": "2023-01-27T05:01:10.117Z",
+      "headers": [],
+      "params": [],
+      "auth": { "type": "bearer", "bearer": "{{access_token}}" },
+      "tests": []
+    },
+    {
+      "_id": "e076ccc7-75a0-46c1-9a43-7ff9ba1dabc3",
+      "colId": "219538cc-93b6-45f7-89a6-804a4285a1a3",
+      "containerId": "",
+      "name": "Delete Webhook",
+      "url": "{{base_url}}/rest/api/3/webhook",
+      "method": "DELETE",
+      "sortNum": 60000,
+      "created": "2023-01-27T04:59:45.490Z",
+      "modified": "2023-01-27T07:31:30.436Z",
+      "headers": [],
+      "params": [],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"webhookIds\": [\n    7\n  ]\n}",
+        "form": []
+      },
+      "auth": { "type": "bearer", "bearer": "{{access_token}}" },
+      "tests": []
+    }
+  ]
+}

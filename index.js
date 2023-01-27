@@ -3,10 +3,18 @@ const fs = require("fs");
 const axios = require("axios");
 const url = require("url-generator");
 const app = express();
+const bodyParser = require("body-parser");
 
 const cred = require("./credentials.json");
 
-const serverUrl = "https://3010-14-140-115-103.in.ngrok.io";
+// Generated https endpoint using ngrok for the port: 3333
+// ngork http 3333
+const serverUrl = "https://49b1-14-140-115-103.in.ngrok.io";
+
+app.use(bodyParser.urlencoded({ extended: false }));
+
+// parse application/json
+app.use(bodyParser.json());
 
 app.get("/jira/auth", async (req, res) => {
   const redirectUrl = await url.create({
@@ -86,8 +94,7 @@ app.get("/jira/info", async (req, res) => {
 });
 
 app.all("/webhook", (req, res) => {
-  console.log(req);
-  fs.writeFileSync("Webhook.json", req.body);
+  fs.writeFileSync("Webhook.json", JSON.stringify(req.body));
   res.end();
 });
 
