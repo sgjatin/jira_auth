@@ -9,19 +9,22 @@ const cred = require("./credentials.json");
 
 // Generated https endpoint using ngrok for the port: 3333
 // ngork http 3333
-const serverUrl = "https://49b1-14-140-115-103.in.ngrok.io";
+const serverUrl = "https://3333-narendrasg-jiraauth-ynxuvcit03q.ws-us104.gitpod.io/jira/auth/callback";
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // parse application/json
 app.use(bodyParser.json());
 
+const client_id = "ityYRiXjJgzXFS0StC8UNmAVLnIYT7cG";
+const client_secret = "ATOA6E6gsl6rkckfSbkhvpEfM1qx94keupJkWhcChUUgqBfEHbBpD6tssl07gEUp0iPK5108C1BB";
+
 app.get("/jira/auth", async (req, res) => {
   const redirectUrl = await url.create({
     url: "https://auth.atlassian.com/authorize",
     params: [
       { key: "audience", value: "api.atlassian.com" },
-      { key: "client_id", value: "Byws3TO2dp8l7S1SSnyar1GEUHW9wUBz" },
+      { key: "client_id", value: client_id },
       {
         key: "scope",
         value: [
@@ -37,7 +40,7 @@ app.get("/jira/auth", async (req, res) => {
       },
       {
         key: "redirect_uri",
-        value: `${serverUrl}/jira/auth/callback`,
+        value: serverUrl,
       },
       { key: "response_type", value: "code" },
       { key: "prompt", value: "consent" },
@@ -52,11 +55,10 @@ app.get("/jira/auth/callback", async (req, res) => {
 
   const response = await axios.post("https://auth.atlassian.com/oauth/token", {
     grant_type: "authorization_code",
-    client_id: "Byws3TO2dp8l7S1SSnyar1GEUHW9wUBz",
-    client_secret:
-      "ATOAtN35HXuWd8hblsXyKgsRRQ26vfrJ5NI-ttW5By_ZASRVZlAFKN1gz0NuOUoD-6IK43990AEB",
+    client_id,
+    client_secret,
     code: code,
-    redirect_uri: `${serverUrl}/jira/auth/callback`,
+    redirect_uri: serverUrl,
   });
 
   //   console.log(response);
@@ -68,11 +70,10 @@ app.get("/jira/auth/callback", async (req, res) => {
 app.get("/jira/refresh_token", async (req, res) => {
   const response = await axios.post("https://auth.atlassian.com/oauth/token", {
     grant_type: "refresh_token",
-    client_id: "Byws3TO2dp8l7S1SSnyar1GEUHW9wUBz",
-    client_secret:
-      "ATOAtN35HXuWd8hblsXyKgsRRQ26vfrJ5NI-ttW5By_ZASRVZlAFKN1gz0NuOUoD-6IK43990AEB",
+    client_id,
+    client_secret,
     refresh_token: cred.refresh_token,
-    redirect_uri: `${serverUrl}/jira/auth/callback`,
+    redirect_uri: serverUrl,
   });
 
   fs.writeFileSync("credentials.json", JSON.stringify(response.data));
