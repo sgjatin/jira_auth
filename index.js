@@ -95,8 +95,8 @@ const client_secret = "ATOA6E6gsl6rkckfSbkhvpEfM1qx94keupJkWhcChUUgqBfEHbBpD6tss
 // });
 
 app.all("/webhook", (req, res) => {
-  fs.writeFileSync("Webhook.json", JSON.stringify(req.body));
-  res.end();
+  //fs.writeFileSync("Webhook.json", JSON.stringify(req.body));
+  res.send(req.body);
 });
 
 app.listen(3333);
